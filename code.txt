@@ -1,0 +1,56 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Créer un graphe dirigé
+G = nx.DiGraph()
+
+# Charger la dataset en utilisant la bibliothèque Pandas
+df = pd.read_csv('heart.csv') 
+
+# Ajouter les nœuds
+for node in set(df['Id']).union(set(df['Label'])):
+    G.add_node(node)
+
+# Ajouter les liens
+for i, row in df.iterrows():
+    G.add_edge(row['Id'], row['Label'])
+
+# Afficher le graphe
+nx.draw(G, with_labels=True)
+plt.show()
+
+# Calculer la centralité degré
+degree_centrality = nx.degree_centrality(G)
+print("Centralité degré :", degree_centrality)
+
+# Calculer la centralité intermédiarité
+betweenness_centrality = nx.betweenness_centrality(G)
+print("Centralité intermédiarité :", betweenness_centrality)
+
+
+
+
+# Analyse de la densité
+density = nx.density(G)
+print("Densité du graphe :", density)
+
+# Analyse du coefficient de clustering
+clustering_coefficient = nx.average_clustering(G)
+print("Coefficient de clustering moyen :", clustering_coefficient)
+
+# Analyse des composants connectés
+connected_components = nx.number_strongly_connected_components(G)
+print("Nombre de composants fortement connectés :", connected_components)
+
+# Algorithme K-clique
+k_clique = list(k_clique_communities(G, 2))
+print("Communautés K-clique :", k_clique)
+
+# Propagation des labels
+label_propagation_communities = label_propagation.label_propagation_communities(G)
+print("Communautés par propagation des labels :", label_propagation_communities)
+
+# Louvain
+louvain_communities = community.greedy_modularity_communities(G)
+print("Communautés Louvain :", louvain_communities)
